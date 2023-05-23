@@ -4,3 +4,7 @@
 
 - [ ] Logo Image
 - [ ] Image for ImageSection Banner
+
+### Sever
+
+- [ ] Change Config.json file with env settings

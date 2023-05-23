@@ -86,8 +86,113 @@ button {
 
 .image-grid {
     width: 75%;
-    height: 100%;
+    height: 90%;
     background-color: #e8f7fa;
+    margin-right: 15px;
 }
 
 /* End of Imageheader Section */
+
+
+/* Trending Posts */
+.trending-container {
+    padding: 40px 70px;
+    border-bottom: 1px solid #d1d1d1;
+    height: 350px;
+    /* Height might be altered */
+}
+
+.trending-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.arrow {
+    border: 1px solid #1b1b1b;
+    border-radius: 50%;
+}
+
+.trending-grid-layout {
+    margin-top: 15px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.trending-title-holder {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trending-grid-title {
+    font-size: 16px;
+    width: 35%;
+    font-weight: 600;
+}
+
+.trending-grid-metadata {
+    font-size: 12px;
+    font-weight: 500;
+    width: 70%;
+}
+
+.blog-post-heading {
+    font-size: 18px;
+    width: 80%;
+    font-weight: 700;
+}
+
+.trending-category {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.category-type {
+    padding: 5px 7px;
+    border-radius: 20px;
+    background: #d1d1d1;
+}
+
+/* End of Trending Posts */
+
+
+/* Blog Container */
+.blog-container {
+    margin-top: 20px;
+}
+
+.blog-container-flex {
+    gap: 4px;
+    display: flex;
+}
+
+.recipe-list {
+    height: 1000px;
+    width: 700px;
+    background: red;
+    flex-grow: 1;
+}
+
+.blog-categories {
+    width: 450px;
+    flex-grow: 0;
+    height: 300px;
+    background-color: green;
+    position: sticky;
+    top: 13%;
+    right: 0;
+}
+
+/* End of Blog Container */

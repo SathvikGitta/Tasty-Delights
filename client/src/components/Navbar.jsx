@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom"
+import CreatePostPage from "../pages/CreatePostPage"
 function Navbar() {
   return (
     <>
@@ -8,9 +10,15 @@ function Navbar() {
         </section>
         <section className="navbar-list">
             <ul>
-                <button>Write</button>
-                <button className="btn-signin">Sign In</button>
-                <button className="btn-signup">Get Started</button>
+                <button>
+                  <Link to="/createpost">Write</Link>
+                </button>
+                <button className="btn-signin">
+                  <Link to="/signin">Sign in</Link>
+                </button>
+                <button >
+                  <Link to="/signup" className="btn-signup">Get Started</Link>
+                </button>
             </ul>
         </section>
     </main>

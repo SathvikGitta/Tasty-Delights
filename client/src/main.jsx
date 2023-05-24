@@ -8,14 +8,18 @@ import ErrorPage from './pages/ErrorPage.jsx'
 import CreatePostPage from './pages/CreatePostPage.jsx'
 import SignInPage from "./pages/SignInPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
+import BlogPost from "./components/Blogpost.jsx"
 
 const router = createBrowserRouter([
   {
     path : "/",
     element : <App/>,
-    errorElement : <ErrorPage/>
+    errorElement : <ErrorPage/>,
   },
-
+  {
+    path : "/recipes",
+    element : <BlogPost/>
+  },
   {
     path : "/createpost",
     element : <CreatePostPage/> //<CreatePostPage/>

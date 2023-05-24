@@ -1,72 +1,49 @@
 import {HiArrowTrendingUp} from "react-icons/hi2"
+import TrendingCard from "./TrendingCard"
+import axios from "axios";
+import { useEffect,useState } from "react";
+
 function Trendingsection() {
+    const[trendData,setTrendData] = useState([]);
+
+    // Fetch Data 
+      {useEffect(()=>{
+        fetchTrending();
+        },[])}
+
+        const fetchTrending = async () =>{
+          try {
+            const response  = await axios.get("http://localhost:3001/recipes");
+            setTrendData(response.data);
+          }
+          catch(error){
+            console.log(error);
+          }
+        };
+
+
   return (
     <>
     <main className="trending-container">
-        <h3 className='trending-title'><HiArrowTrendingUp className="arrow" size={20}/> Trending on Medium</h3>
-        <section className="trending-grid-layout">  {/* Layout for grid items */}
+        <h3 className='trending-title'><HiArrowTrendingUp className="arrow" size={20}/> Trending on Tasty Delights</h3>
+        <section className="trending-grid-layout">  
+        {/* Layout for grid items */}
 
-        <div className="grid-items-container"> {/* GridItemsContainer containes API Data */}
 
-        <section className='trending-title-holder'>
-            <img src="" alt="" />
-            <h3 className="trending-grid-title">Matty Brownell {/* Blog.Title*/}</h3>
-            <h4 className='trending-grid-metadata'>UX Collective {/* Blog.MetaData*/}</h4>
-        </section>
-
-        <section className="trending-blogPost">
-            <h2 className='blog-post-heading'>{/*Blog.PostTitle*/}How I used Midjourney to design a brand identity</h2>
-        </section>
-
-        <section className='trending-category'>
-            <span >{/*Blog.Dat */}May 15</span>
-            <span className="category-type">{/*Blog.category*/} breakfast</span>
-         </section>
-
-         
-        </div> 
-
-         <div className="grid-items-container"> {/* GridItemsContainer containes API Data */}
-
-        <section className='trending-title-holder'>
-            <img src="" alt="" />
-            <h3 className="trending-grid-title">Matty Brownell {/* Blog.Title*/}</h3>
-            <h4 className='trending-grid-metadata'><span className='grey-text-word'>in</span>UX Collective {/* Blog.MetaData*/}</h4>
-        </section>
-
-        <section className="trending-blogPost">
-            <h2 className='blog-post-heading'>{/*Blog.PostTitle*/}How I used Midjourney to design a brand identity</h2>
-        </section>
-
-        <section className='trending-category'>
-            <span >{/*Blog.Dat */}May 15</span>
-            <span>{/*Blog.category*/} breakfast</span>
-         </section>
-
-         
-        </div> 
-
-         <div className="grid-items-container"> {/* GridItemsContainer containes API Data */}
-
-        <section className='trending-title-holder'>
-            <img src="" alt="" />
-            <h3 className="trending-grid-title">Matty Brownell {/* Blog.Title*/}</h3>
-            <h4 className='trending-grid-metadata'><span className='grey-text-word'>in</span>UX Collective {/* Blog.MetaData*/}</h4>
-        </section>
-
-        <section className="trending-blogPost">
-            <h2 className='blog-post-heading'>{/*Blog.PostTitle*/}How I used Midjourney to design a brand identity</h2>
-        </section>
-
-        <section className='trending-category'>
-            <span >{/*Blog.Dat */}May 15</span>
-            <span>{/*Blog.category*/} breakfast</span>
-         </section>
-
-         
-        </div> 
-        {/* End of GridItemsContainer */}
-        </section>
+        {/* Mapping the request */}
+        {
+          trendData.slice(0,6).map((item,key)=>{
+            return (
+              <>
+              <div key={key}>
+                <TrendingCard userName = {item.userName} Title = {item.title} Description = {item.titleDescription} Date= {item.date} Category = {item.category}/>
+              </div>
+              </>
+            )
+          })
+        } 
+        {/* End of Grid  */}
+        </section>  
     </main>
     </>
   )

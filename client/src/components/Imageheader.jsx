@@ -1,4 +1,4 @@
-
+import {Link} from "react-router-dom"
 function Imageheader() {
   return (
     <>
@@ -6,7 +6,9 @@ function Imageheader() {
         <section className="Imagetext">
             <h2 className="title-headline">Savor the Art of Cooking</h2>
             <span className="titlechef-tagline">Find Inspiration and Delicious Recipes on TastyDelights</span>
-            <button className="imageHeader-btn">Start Reading</button>
+            <Link to="/recipes">
+            <button className="imageHeader-btn">Explore Recipes</button>
+            </Link>
         </section>
 
         {/* Image Grid Section */}

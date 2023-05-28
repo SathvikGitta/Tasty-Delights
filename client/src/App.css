@@ -99,77 +99,78 @@ button {
 
 
 /* Trending Posts */
-.trending-container {
-    padding: 40px 70px;
-    height: 700px;
+.trendingPostContainer {
+    width: 100%;
+    height: 550px;
+    padding-top: 40px;
+    padding-left: 30px;
 }
 
-.trending-title {
+.trendingpost-flexicon {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 18px;
-    font-weight: 600;
+    gap: 5px;
+    padding-left: 10px;
 }
 
-.arrow {
-    border: 1px solid #1b1b1b;
-    border-radius: 50%;
-}
-
-.trending-grid-layout {
-    margin-top: 15px;
+.data-fetch-container {
     width: 100%;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    height: 600px;
-    /* background-color: red; */
-    border-bottom: 1px solid #d1d1d1;
-}
-
-.trending-title-holder {
-    width: 100%;
-    height: 30px;
-}
-
-.trending-grid-title {
-    font-size: 16px;
-    width: 35%;
-    font-weight: 600;
-}
-
-.blog-post-description {
-    margin-top: 10px;
-    font-size: 16px;
-    font-weight: 500;
-    width: 90%;
-}
-
-.blog-post-heading {
-    font-size: 18px;
-    width: 80%;
-    font-weight: 700;
-}
-
-.trending-category {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-    font-size: 12px;
-}
-
-.category-type {
-    padding: 5px 7px;
-    border-radius: 20px;
-    background: #d1d1d1;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 20px;
 }
 
 /* End of Trending Posts */
+/* Trending Card */
+.trendingCard-container {
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    /* box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); */
+    padding: 10px;
+    border-radius: 4px;
+    /* box-shadow: 3px 4px 4px rgba(0,0,0,0.2); */
+}
 
+.trendingcard-userName {
+    font-weight: 600;
+}
+
+.trendingcard-title {
+    font-size: 18px;
+    margin-top: 4px;
+    font-weight: 700;
+}
+
+.trendingcard-description {
+    margin-top: 6px;
+    width: 100%;
+    height: 3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.5rem;
+    font-size: 16px;
+}
+
+.trendingcard-category {
+    width: fit-content;
+    display: block;
+    margin-top: 10px;
+    background-color: #d1d1d1;
+    border: 1px solid #d2d2d2;
+    border-radius: 6px;
+    padding: 5px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* End of Trending Card */
 
 /* Blog Container */
 .blog-container {
@@ -199,3 +200,72 @@ button {
 }
 
 /* End of Blog Container */
+
+
+/* Create Post Container */
+.createpostpage {
+    width: 100%;
+    height: 100vh;
+    /* background-color: red; */
+}
+
+.formPost {
+    width: inherit;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+label {
+    display: inline;
+    width: 200px;
+}
+
+input {
+    padding-left: 4px;
+    width: 200px;
+    height: 35px;
+    outline: none;
+    border: 1px solid #d1d1d1;
+}
+
+textarea {
+    width: 450px;
+    height: 200px;
+    resize: none;
+    outline: none;
+    border: 1px solid #d1d1d1;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.date-input {
+    width: 60px;
+    margin-left: 10px;
+}
+
+.category-input {
+    margin-left: 10px;
+    outline: none;
+    border: 1px solid #d1d1d1;
+    padding: 7px 5px;
+}
+
+option {
+    width: 200px;
+    border: 1px solid #d1d1d1;
+}
+
+.postSubmit-btn {
+    display: block;
+    margin: 0px auto;
+    width: 150px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #232323;
+    color: #fff;
+}
+
+/* End of Create Post Container */

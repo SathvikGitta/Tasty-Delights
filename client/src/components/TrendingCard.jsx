@@ -1,37 +1,14 @@
-/* eslint-disable react/prop-types */
-function TrendingCard(props) {
-  const userName = props.userName;
-  const Title = props.Title;
-  const Description = props.Description;
-  const Date = props.Date;
-  const Category = props.Category;
-  
-
+function TrendingCard({title,description,userName,category}) {
   return (
     <>
-    <div className="grid-items-container"> {/* GridItemsContainer containes API Data */}
-
-        <section className='trending-title-holder'>
-            <h3 className="trending-grid-title">{userName}</h3>
-        </section>
-
-        <section className="trending-blogPost">
-            <h2 className='blog-post-heading'>{Title}</h2>
-        </section>
-        <section className="trending-blogDescription">
-            <h2 className='blog-post-description'>{Description}</h2>
-        </section>
-        <section className='trending-category'>
-            <span >{Date}</span>
-            <span className="category-type">{Category}</span>
-         </section>
-
-         
-        </div> 
+    <div className="trendingCard-container">
+        <h4 className="trendingcard-userName">{userName}</h4>
+        <h2 className="trendingcard-title">{title}</h2>
+        <p className="trendingcard-description">{description}</p>
+        <span className="trendingcard-category">{category}</span>
+    </div>
     </>
   )
 }
-
-
 
 export default TrendingCard

@@ -1,4 +1,4 @@
-# RecipeBook
+# Tasty Delights
 
 ## Tech Stack : React,Nodejs,Mysql,Sequelize
 

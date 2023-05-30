@@ -10,7 +10,7 @@ function TrendingPost() {
   // Fetch Data using Axios
   useEffect(() => {
     axios
-      .get("http://localhost:3000/recipes")
+      .get("http://localhost:3000/trending")
       .then((response) => setTrendData(response.data))
       .catch((err) => console.log(err));
   }, []);
@@ -27,7 +27,7 @@ function TrendingPost() {
           {trendData.slice(0, 7).map((items, key) => {
             return (
               <>
-                <Link to="/recipes:id" style={{color : "#000"}}>
+                <Link to="/recipes:id" style={{ color: "#000" }}>
                   <div key={key}>
                     <TrendingCard
                       userName={items.userName}

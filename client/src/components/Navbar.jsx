@@ -24,12 +24,8 @@ function Navbar() {
               </Link>
             </button>
             <button>
-              <Link
-                to="/create-a-post"
-                className="Link"
-                style={{ display: "flex", alignItems: "center", gap: "2px" }}
-              >
-                <BsPencil /> Write
+              <Link to="/create-a-post" className="Link">
+                Write
               </Link>
             </button>
             <button className="btn-signin">

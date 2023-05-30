@@ -91,8 +91,12 @@ button {
 .image-grid {
     width: 75%;
     height: 90%;
-    background-color: #e8f7fa;
+    background-image: url("./assets/HeroBannerImage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 1px -30px;
     margin-right: 15px;
+    border-radius: 4px;
 }
 
 /* End of Imageheader Section */
@@ -162,7 +166,7 @@ button {
     width: fit-content;
     display: block;
     margin-top: 10px;
-    background-color: #d1d1d1;
+    background-color: #e6e6e6;
     border: 1px solid #d2d2d2;
     border-radius: 6px;
     padding: 5px;
@@ -172,100 +176,98 @@ button {
 
 /* End of Trending Card */
 
-/* Blog Container */
-.blog-container {
-    margin-top: 20px;
-}
-
-.blog-container-flex {
-    gap: 4px;
+/* Recipe Card Container */
+.recipeCard-container {
     display: flex;
+    gap: 2px;
 }
 
-.recipe-list {
-    height: 1000px;
-    width: 700px;
-    background: red;
-    flex-grow: 1;
+.recipeCard-containerData {
+    height: auto;
+    width: 60%;
 }
 
-.blog-categories {
-    width: 450px;
-    flex-grow: 0;
-    height: 300px;
-    background-color: green;
-    position: sticky;
-    top: 13%;
-    right: 0;
-}
-
-/* End of Blog Container */
-
-
-/* Create Post Container */
-.createpostpage {
-    width: 100%;
-    height: 100vh;
-    /* background-color: red; */
-}
-
-.formPost {
-    width: inherit;
-    margin-top: 20px;
+.recipeCard-dataCard {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    padding-top: 40px;
+    padding: 40px;
 }
 
+.recipeCard-userName {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.recipeCard-title {
+    margin-top: 5px;
+}
+
+.recipeCard-description {
+    margin-top: 6px;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-height: 24px;
+    width: 95%;
+}
+
+.recipeCard-category {
+    text-transform: capitalize;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    font-weight: 700;
+    width: 80px;
+    text-align: center;
+    background-color: #e6e6e6;
+    color: #232323;
+    text-align: center;
+    padding: 4px 0px;
+    border-radius: 10px;
+}
+
+.image {
+    width: 250px;
+    height: 166px;
+    object-fit: cover;
+    border-radius: 4px;  
+}
+    
+
+/* End of Recipe Card Container */
+
+
+/* Create Post */
 label {
-    display: inline;
-    width: 200px;
+    display: block;
 }
 
-input {
-    padding-left: 4px;
+input[type="text"] {
+    border: 1px solid #1b1b1b;
+    outline: none;
     width: 200px;
-    height: 35px;
-    outline: none;
-    border: 1px solid #d1d1d1;
-}
-
-textarea {
-    width: 450px;
-    height: 200px;
-    resize: none;
-    outline: none;
-    border: 1px solid #d1d1d1;
-    padding-top: 10px;
+    height: 30px;
+    border-radius: 4px;
     padding-left: 10px;
 }
 
-.date-input {
-    width: 60px;
-    margin-left: 10px;
-}
-
-.category-input {
-    margin-left: 10px;
+textarea {
+    resize: none;
     outline: none;
-    border: 1px solid #d1d1d1;
-    padding: 7px 5px;
 }
 
-option {
-    width: 200px;
-    border: 1px solid #d1d1d1;
+input[type="submit"] {
+    margin-top: 20px;
+    margin-left: 30px;
+    padding: 5px 20px;
+
 }
 
-.postSubmit-btn {
-    display: block;
-    margin: 0px auto;
-    width: 150px;
-    height: 30px;
-    border-radius: 4px;
-    background-color: #232323;
-    color: #fff;
+.form-container {
+    padding-left: 30px;
 }
-
-/* End of Create Post Container */

@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const multer = require("multer");
 const path = require("path");
-const { Posts } = require("./models");
+const { Posts } = require("./models/index");
 
 app.use('/Images', express.static("./Images"));
 app.use(express.json());
@@ -41,16 +41,6 @@ const upload = multer({
 }).single("image");
 
 // GET & POST METHODS
-
-app.get("/recipes", async (req, res) => {
-    try {
-        const listOfPosts = await Posts.findAll();
-        res.json(listOfPosts);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch recipes." });
-    }
-});
-
 app.post("/recipes", upload, async (req, res) => {
     try {
         if (req.file == null) {
@@ -65,7 +55,7 @@ app.post("/recipes", upload, async (req, res) => {
             title,
             postText,
             userName,
-            category
+            category,
         };
 
         await Posts.create(post);
@@ -74,6 +64,25 @@ app.post("/recipes", upload, async (req, res) => {
         res.status(500).json({ error: "Failed to create recipe." });
     }
 });
+
+
+app.get("/recipes", async (req, res) => {
+    try {
+        const listOfPosts = await Posts.findAll({
+            order: [['createdAt', 'DESC']],
+        });
+        res.json(listOfPosts);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch recipes." });
+    }
+});
+
+app.get("/recipes/byId/:id", async (req, res) => {
+    const id = req.params.id;
+    const post = await Posts.findOne({ where: { id } });
+    res.json(post);
+});
+
 
 // Routers
 const commentRouter = require("./routes/Comments");

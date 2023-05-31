@@ -9,6 +9,7 @@ import CreatePostPage from "./pages/CreatePostPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import RecipePost from "./pages/RecipePost.jsx";
+import PostPage from "./pages/PostPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <SignUpPage />, //<SignUpPage/>
   },
+  {
+    path : "/post/:id",
+    element : <PostPage/> //Individual Page 
+  }
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

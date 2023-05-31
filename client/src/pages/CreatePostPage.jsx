@@ -1,90 +1,123 @@
-import { Formik, Form, Field } from "formik";
-import Navbar from "../components/Navbar";
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
+import Navbar from "../components/Navbar";
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  postText: Yup.string().required("Post Text is required"),
+  userName: Yup.string().required("Username is required"),
+  category: Yup.string().required("Category is required"),
+  image: Yup.mixed().required("Image is required"),
+});
 
 function CreatePostPage() {
-  const initialValues = {
-    title: "",
-    postText: "",
-    userName: "",
-    category: "",
-    image: "",
-  };
-
-  const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("postText", data.postText);
-    formData.append("userName", data.userName);
-    formData.append("category", data.category);
-    formData.append("image", data.selectedImage);
-
-    axios
-      .post("http://localhost:3000/recipes", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(() => console.log("IT WORKED FOR ME"))
-      .catch((error) => console.log(error));
-  };
-
   const handleImageChange = (event, setFieldValue) => {
     const file = event.target.files[0];
-    setFieldValue("selectedImage", file); // Store the selected file separately
+    setFieldValue("image", file);
+  };
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("postText", values.postText);
+    formData.append("userName", values.userName);
+    formData.append("category", values.category);
+    formData.append("image", values.image);
+
+    try {
+      await axios.post("http://localhost:3000/recipes", formData);
+      console.log("Post created successfully");
+      resetForm();
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
+
+    setSubmitting(false);
   };
 
   return (
-    <>
+    <div>
       <Navbar />
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ setFieldValue, values }) => (
-          <Form encType="multipart/form-data">
-            <label htmlFor="title">Recipe Name:</label>
-            <Field
-              name="title"
-              autocompleter="false"
-              id="input-title"
-              placeholder="Enter your recipe title"
-            />
-            <label htmlFor="postText">Description</label>
+      <h1 style={{ textAlign: "center" }}>Create Post</h1>
+      <Formik
+        initialValues={{
+          title: "",
+          postText: "",
+          userName: "",
+          category: "",
+          image: null,
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ values, isSubmitting, setFieldValue }) => (
+          <Form
+            style={{
+              height: "100vh",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <label htmlFor="title">Title:</label>
+            <Field type="text" name="title" id="title" />
+            <ErrorMessage name="title" component="span" className="Error" />
+
+            <label htmlFor="postText">Post Text:</label>
             <Field
               as="textarea"
               name="postText"
-              id="input-postText"
-              cols="100"
-              rows="20"
+              id="postText"
+              rows={20}
+              cols={30}
             />
+            <ErrorMessage name="postText" component="span" className="Error" />
 
-            <label htmlFor="userName">UserName:</label>
-            <Field
-              name="userName"
-              id="input-userName"
-              placeholder="Enter your username"
-            />
+            <label htmlFor="userName">Username:</label>
+            <Field type="text" name="userName" id="userName" />
+            <ErrorMessage name="userName" component="span" className="Error" />
+
             <label htmlFor="category">Category:</label>
-            <Field
-              type="text"
-              name="category"
-              id="input-category"
-              placeholder="Eg:breakfast | Lunch | Dinner"
+            <Field as="select" name="category" id="category">
+              <option value="">Select a category</option>
+              <option value="breakfast">breakfast</option>
+              <option value="lunch">lunch</option>
+              <option value="dinner">dinner</option>
+            </Field>
+            <ErrorMessage name="category" component="span" className="Error" />
+
+            <label htmlFor="image">Image:</label>
+            <input
+              type="file"
+              id="image"
+              accept="image/png,image/jpeg,image/jpg,image/svg"
+              onChange={(event) => handleImageChange(event, setFieldValue)}
+              name="image"
+              style={{ display: "inline-block" }}
             />
-            <label htmlFor="image">
-              upload image:
-              <Field
-                type="file"
-                name="image"
-                id="input-image"
-                accept="image/png,image/jpeg,image/jpg,image/svg"
-                onChange={(event) => handleImageChange(event, setFieldValue)}
-              />
-              {values.image && <p>Selected image: {values.image.name}</p>}
-            </label>
-            <input type="submit" value="Create a post" id="input-btn-submit" />
+            <ErrorMessage name="image" component="div" className="Error" />
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                marginTop: "30px",
+                padding: "10px 20px",
+                backgroundColor: "#232323",
+                color: "#fff",
+                borderRadius : "8px"
+              }}
+            >
+              Create Post
+            </button>
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 }
 

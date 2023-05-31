@@ -235,9 +235,9 @@ button {
     width: 250px;
     height: 166px;
     object-fit: cover;
-    border-radius: 4px;  
+    border-radius: 4px;
 }
-    
+
 
 /* End of Recipe Card Container */
 
@@ -270,4 +270,8 @@ input[type="submit"] {
 
 .form-container {
     padding-left: 30px;
+}
+
+.Error {
+    color: red;
 }

@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         postText: {
             type: DataTypes.TEXT,
-            allowNull: "false"
+            allowNull: false
         },
-        userName: {
+        username: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -20,7 +20,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-    })
+    });
+
+    Posts.associate = (models) => {
+        Posts.hasMany(models.Comments, {
+            foreignKey: 'postId',
+            onDelete: 'cascade'
+        });
+    };
 
     return Posts;
-}
+};

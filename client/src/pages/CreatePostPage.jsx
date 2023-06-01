@@ -1,18 +1,20 @@
-import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import Navbar from "../components/Navbar";
+
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   postText: Yup.string().required("Post Text is required"),
-  userName: Yup.string().required("Username is required"),
+  username: Yup.string().required("username is required"),
   category: Yup.string().required("Category is required"),
   image: Yup.mixed().required("Image is required"),
 });
 
 function CreatePostPage() {
+  const navigate = useNavigate();
+
   const handleImageChange = (event, setFieldValue) => {
     const file = event.target.files[0];
     setFieldValue("image", file);
@@ -22,13 +24,14 @@ function CreatePostPage() {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("postText", values.postText);
-    formData.append("userName", values.userName);
+    formData.append("username", values.username);
     formData.append("category", values.category);
     formData.append("image", values.image);
 
     try {
       await axios.post("http://localhost:3000/recipes", formData);
       console.log("Post created successfully");
+      navigate("/recipes");
       resetForm();
     } catch (error) {
       console.error("Error creating post:", error);
@@ -39,20 +42,20 @@ function CreatePostPage() {
 
   return (
     <div>
-      <Navbar />
+      <button onClick={() => navigate("/")}>Go Back</button>
       <h1 style={{ textAlign: "center" }}>Create Post</h1>
       <Formik
         initialValues={{
           title: "",
           postText: "",
-          userName: "",
+          username: "",
           category: "",
           image: null,
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, isSubmitting, setFieldValue }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form
             style={{
               height: "100vh",
@@ -66,7 +69,6 @@ function CreatePostPage() {
             <label htmlFor="title">Title:</label>
             <Field type="text" name="title" id="title" />
             <ErrorMessage name="title" component="span" className="Error" />
-
             <label htmlFor="postText">Post Text:</label>
             <Field
               as="textarea"
@@ -76,11 +78,9 @@ function CreatePostPage() {
               cols={30}
             />
             <ErrorMessage name="postText" component="span" className="Error" />
-
-            <label htmlFor="userName">Username:</label>
-            <Field type="text" name="userName" id="userName" />
-            <ErrorMessage name="userName" component="span" className="Error" />
-
+            <label htmlFor="username">username:</label>
+            <Field type="text" name="username" id="username" />
+            <ErrorMessage name="username" component="span" className="Error" />
             <label htmlFor="category">Category:</label>
             <Field as="select" name="category" id="category">
               <option value="">Select a category</option>
@@ -89,7 +89,6 @@ function CreatePostPage() {
               <option value="dinner">dinner</option>
             </Field>
             <ErrorMessage name="category" component="span" className="Error" />
-
             <label htmlFor="image">Image:</label>
             <input
               type="file"
@@ -100,7 +99,6 @@ function CreatePostPage() {
               style={{ display: "inline-block" }}
             />
             <ErrorMessage name="image" component="div" className="Error" />
-
             <button
               type="submit"
               disabled={isSubmitting}
@@ -109,7 +107,7 @@ function CreatePostPage() {
                 padding: "10px 20px",
                 backgroundColor: "#232323",
                 color: "#fff",
-                borderRadius : "8px"
+                borderRadius: "8px",
               }}
             >
               Create Post

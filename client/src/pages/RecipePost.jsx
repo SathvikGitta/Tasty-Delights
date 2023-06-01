@@ -80,7 +80,7 @@ function RecipePost() {
             onClick={() => handleRecipeClick(items.id, items.category)}
           >
             <RecipeCard
-              userName={items.userName}
+              username={items.username}
               title={items.title}
               description={items.postText}
               category={items.category}

@@ -29,12 +29,12 @@ function Navbar() {
               </Link>
             </button>
             <button className="btn-signin">
-              <Link to="/signin" className="Link">
-                Sign in
+              <Link to="/login-page" className="Link">
+                Log in
               </Link>
             </button>
             <button>
-              <Link to="/signup" className="btn-signup Link">
+              <Link to="/registration-page" className="btn-signup Link">
                 Get Started
               </Link>
             </button>

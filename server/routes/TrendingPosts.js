@@ -15,11 +15,11 @@ router.get("/", async (req, res) => {
 
 
 router.post("/", async (req, res) => {
-    const { title, postText, userName, category } = req.body;
+    const { title, postText, username, category } = req.body;
     const post = {
         title,
         postText,
-        userName,
+        username,
         category
     };
     await Posts.create(post);

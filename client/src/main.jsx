@@ -6,10 +6,10 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import CreatePostPage from "./pages/CreatePostPage.jsx";
-import SignInPage from "./pages/SignInPage.jsx";
-import SignUpPage from "./pages/SignUpPage.jsx";
 import RecipePost from "./pages/RecipePost.jsx";
 import PostPage from "./pages/PostPage.jsx";
+import RegistrationPage from "./pages/RegistrationPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,17 +26,17 @@ const router = createBrowserRouter([
     element: <CreatePostPage />, //<CreatePostPage/>
   },
   {
-    path: "/signin",
-    element: <SignInPage />, // SIgnInPage
+    path: "/registration-page",
+    element: <RegistrationPage />,
   },
   {
-    path: "/signup",
-    element: <SignUpPage />, //<SignUpPage/>
+    path: "/login-page",
+    element: <LoginPage />, //<SignUpPage/>
   },
   {
-    path : "/post/:id",
-    element : <PostPage/> //Individual Page 
-  }
+    path: "/post/:id",
+    element: <PostPage />, //Individual Page
+  },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

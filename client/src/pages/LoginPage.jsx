@@ -1,35 +1,43 @@
 import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    const data = { username, password };
+  const initialValues = {
+    username: "",
+    password: "",
+  };
+
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
+  const handleSubmit = (values) => {
     axios
-      .post("http://localhost:3000/auth/login", data)
+      .post("http://localhost:3000/auth/login", values)
       .then((response) => {
-        console.log(response, "Your are Logged In");
         if (response.data.error) {
-          alert(response.data.error);
+          setError(response.data.error);
         } else {
-          sessionStorage.setItem("accessToken", response.data);
+          const accessToken = response.data.accessToken;
+          localStorage.setItem("accessToken", accessToken);
           navigate("/");
         }
-        setUsername("");
-        setPassword("");
       })
       .catch((error) => {
         console.error("Error logging in:", error);
+        setError("An error occurred. Please try again.");
       });
   };
 
   return (
     <>
-      <h1>Login Page</h1>
       <div
         style={{
           width: "100%",
@@ -40,34 +48,66 @@ function LoginPage() {
           justifyContent: "center",
         }}
       >
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          name="username"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <button
-          onClick={handleLogin}
-          style={{
-            background: "#232323",
-            color: "#fff",
-            padding: "10px 20px",
-            marginTop: "20px",
-          }}
+        <h3 style={{ marginBottom: "30px" }}>Login Page</h3>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
-          Login
+          <Form>
+            <div>
+              <label htmlFor="username">Username:</label>
+              <Field
+                type="text"
+                id="username"
+                name="username"
+                autocomplete="off"
+              />
+              <ErrorMessage name="username" component="div" />
+            </div>
+
+            <div>
+              <label htmlFor="password">Password:</label>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="off"
+              />
+              <ErrorMessage name="password" component="div" />
+            </div>
+
+            <button
+              type="submit"
+              style={{
+                background: "#232323",
+                color: "#fff",
+                padding: "10px 20px",
+                marginTop: "20px",
+              }}
+            >
+              Login
+            </button>
+          </Form>
+        </Formik>
+
+        <span style={{ marginTop: "15px", fontSize: 14 }}>
+          Dont have an account?{" "}
+          <button
+            onClick={() => navigate("/registration-page")}
+            style={{ textDecoration: "underline", color: "blue" }}
+          >
+            Register here
+          </button>
+        </span>
+
+        <button
+          onClick={() => navigate("/")}
+          style={{ textDecoration: "underline", marginTop: "20px" }}
+        >
+          Go Home
         </button>
       </div>
     </>

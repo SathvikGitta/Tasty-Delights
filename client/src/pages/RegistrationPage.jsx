@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 function RegistrationPage() {
@@ -28,8 +29,12 @@ function RegistrationPage() {
 
   return (
     <>
-      <button onClick={() => navigate("/")}>back</button>
-      <h3>Registration Form</h3>
+      <button
+        style={{ height: "50px", marginLeft: "40px" }}
+        onClick={() => navigate("/")}
+      >
+        <BiArrowBack fontSize={28} />
+      </button>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -37,7 +42,7 @@ function RegistrationPage() {
       >
         <Form
           style={{
-            height: "100vh",
+            height: "85vh",
             width: "100%",
             display: "flex",
             flexDirection: "column",
@@ -45,6 +50,8 @@ function RegistrationPage() {
             alignItems: "center",
           }}
         >
+          <h3 style={{ marginBottom: "20px" }}>Registration Form</h3>
+
           <label htmlFor="username">Username:</label>
           <Field
             type="text"
@@ -60,11 +67,12 @@ function RegistrationPage() {
             type="password"
             name="password"
             placeholder="Enter your password"
-            autoComplete="false"
+            autoComplete="off"
           />
           <ErrorMessage name="password" component="span" className="Error" />
 
           <button
+            onClick={() => navigate("/login-page")}
             type="submit"
             style={{
               marginTop: "30px",
@@ -75,6 +83,22 @@ function RegistrationPage() {
             }}
           >
             Register
+          </button>
+          <span style={{ marginTop: "10px" }}>
+            have an account please{" "}
+            <button
+              onClick={() => navigate("/login-page")}
+              style={{ textDecoration: "underline", color: "blue" }}
+            >
+              login
+            </button>
+          </span>
+
+          <button
+            onClick={() => navigate("/")}
+            style={{ marginTop: "15px", textDecoration: "underline" }}
+          >
+            Go Home
           </button>
         </Form>
       </Formik>

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import { BsPencil } from "react-icons/bs";
+
 function Navbar() {
+  const accessToken = localStorage.getItem("accessToken");
+
   return (
     <>
       <main className="navbar-container">
@@ -28,16 +30,21 @@ function Navbar() {
                 Write
               </Link>
             </button>
-            <button className="btn-signin">
-              <Link to="/login-page" className="Link">
-                Log in
-              </Link>
-            </button>
-            <button>
-              <Link to="/registration-page" className="btn-signup Link">
-                Get Started
-              </Link>
-            </button>
+
+            {!accessToken && (
+              <>
+                <button className="btn-signin">
+                  <Link to="/login-page" className="Link">
+                    Log in
+                  </Link>
+                </button>
+                <button>
+                  <Link to="/registration-page" className="btn-signup Link">
+                    Get Started
+                  </Link>
+                </button>
+              </>
+            )}
           </ul>
         </section>
       </main>

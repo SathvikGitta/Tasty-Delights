@@ -31,64 +31,73 @@ function RecipePost() {
   const buttonStyle = {
     backgroundColor: "#e1e1e1",
     color: "#232323",
-    padding: "8px",
-    borderRadius: "4px",
+    padding: "10px",
+    borderRadius: "10px",
     fontSize: 12,
-    fontWeight : 400
+    fontWeight: 400,
   };
+
   return (
     <>
       <Navbar />
-      <div
-        style={{
-          width: "100%",
-          height: "40px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "20px",
-          paddingInline: "20px",
-        }}
-      >
-        <button style={buttonStyle} onClick={() => setSelectedCategory(null)}>
-          All
-        </button>
-        <button
-          style={buttonStyle}
-          onClick={() => setSelectedCategory("breakfast")}
-        >
-          Breakfast
-        </button>
-        <button
-          style={buttonStyle}
-          onClick={() => setSelectedCategory("lunch")}
-        >
-          Lunch
-        </button>
-        <button
-          style={buttonStyle}
-          onClick={() => setSelectedCategory("dinner")}
-        >
-          Dinner
-        </button>
-      </div>
+      <div className="recipeContainer-flex">
+        <div className="recipeContainer-data">
+          {filteredData.map((items, key) => {
+            return (
+              <div
+                key={key}
+                onClick={() => handleRecipeClick(items.id, items.category)}
+                style={{ cursor: "pointer" }}
+              >
+                <RecipeCard
+                  // username={items.username}
+                  title={items.title}
+                  description={items.postText}
+                  category={items.category}
+                  image={items.image}
+                />
+              </div>
+            );
+          })}
+        </div>
 
-      {filteredData.map((items, key) => {
-        return (
-          <div
-            key={key}
-            onClick={() => handleRecipeClick(items.id, items.category)}
+        <div
+          className="recipeContainer-category"
+          style={{
+            width: "100%",
+            height: "450px",
+            display: "flex",
+            alignItems: "start",
+            flexWrap: "wrap",
+            gap: "14px",
+            paddingInline: "20px",
+            marginTop: "40px",
+          }}
+        >
+          <button style={buttonStyle} onClick={() => setSelectedCategory(null)}>
+            All
+          </button>
+          <button
+            style={buttonStyle}
+            onClick={() => setSelectedCategory("breakfast")}
           >
-            <RecipeCard
-              username={items.username}
-              title={items.title}
-              description={items.postText}
-              category={items.category}
-              image={items.image}
-            />
-          </div>
-        );
-      })}
+            Breakfast
+          </button>
+          <button
+            style={buttonStyle}
+            onClick={() => setSelectedCategory("lunch")}
+          >
+            Lunch
+          </button>
+          <button
+            style={buttonStyle}
+            onClick={() => setSelectedCategory("dinner")}
+          >
+            Dinner
+          </button>
+        </div>
+      </div>
+      {/* End Of Recipe Container */}
     </>
   );
 }

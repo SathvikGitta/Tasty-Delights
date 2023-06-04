@@ -178,18 +178,20 @@ button {
 
 /* Recipe Card Container */
 .recipeCard-container {
+    width: 900px;
     display: flex;
     gap: 2px;
 }
 
 .recipeCard-containerData {
+    width: 100%;
     height: auto;
-    width: 60%;
 }
 
 .recipeCard-dataCard {
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
     gap: 10px;
     padding-top: 40px;
     padding: 40px;
@@ -213,7 +215,7 @@ button {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     line-height: 24px;
-    width: 95%;
+    width: 84%;
 }
 
 .recipeCard-category {
@@ -241,6 +243,14 @@ button {
 
 /* End of Recipe Card Container */
 
+/* Recipe Post Container */
+.recipeContainer-flex {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+/* End of Recipe Post Container */
 
 /* Create Post */
 label {

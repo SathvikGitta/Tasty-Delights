@@ -4,6 +4,7 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 const { Posts } = require("./models/index");
+const { validateToken } = require("./middleware/AuthMiddleWare"); // 
 
 app.use("/Images", express.static("./Images"));
 app.use(express.json());
@@ -68,6 +69,7 @@ app.post("/recipes", upload, async (req, res) => {
     }
 });
 
+// GET method with validateToken middleware
 app.get("/recipes", async (req, res) => {
     try {
         const listOfPosts = await Posts.findAll({
@@ -100,7 +102,7 @@ app.put("/recipes/:id", upload, async (req, res) => {
             return res.status(404).json({ error: "Post not found." });
         }
 
-        const { title, postText, userName, category } = req.body;
+        const { title, postText, username, category } = req.body;
         let image = post.image;
 
         if (req.file) {
@@ -111,7 +113,7 @@ app.put("/recipes/:id", upload, async (req, res) => {
             image,
             title,
             postText,
-            userName,
+            username,
             category,
         };
 

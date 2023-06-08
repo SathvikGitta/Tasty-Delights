@@ -16,23 +16,33 @@ function PostPage() {
       .get(`http://localhost:3000/recipes/${id}`)
       .then((response) => setPostData(response.data))
       .catch((error) => console.log(error));
+  }, [id]);
 
+  useEffect(() => {
     axios
       .get(`http://localhost:3000/comments/${id}`)
       .then((response) => setComments(response.data))
       .catch((error) => console.log(error));
-  }, [id]);
+  });
 
   // Comments Post
   const addComment = () => {
     axios
-      .post("http://localhost:3000/comments", {
-        commentBody: newComment,
-        postId: id,
-      })
+      .post(
+        "http://localhost:3000/comments",
+        {
+          commentBody: newComment,
+          PostId: id,
+        },
+        {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        }
+      )
       .then((response) => {
-        // const commentToAdd = { commentBody: newComment };
-        setNewComment(response.data);
+        const commentToAdd = { commentBody: newComment,username : response.data.username};
+        setNewComment(...comments, commentToAdd);
         setNewComment("");
       });
   };
@@ -62,7 +72,7 @@ function PostPage() {
             {postData.title}
           </h2>
           <p style={{ marginTop: "5px", fontSize: 18, fontWeight: 600 }}>
-            by {postData.username}
+            by {comments.username}
           </p>
           <img
             src={`http://localhost:3000/Images/${postData.image}`}
@@ -100,6 +110,8 @@ function PostPage() {
             </div>
           </div>
         </div>
+
+        {/* *******************COMMENT SECTION ******************************************* */}
 
         <div className="rightSide" style={{ height: "auto", marginBottom: 30 }}>
           <div className="addCommentContainer">
@@ -154,9 +166,9 @@ function PostPage() {
                 }}
               >
                 <span>{comment.commentBody}</span>
-                <label style={{ fontSize: 12, fontWeight: 600 }}>
-                  username
-                </label>
+                <span style={{ fontSize: 12, fontWeight: 600 }}>
+                  {comments.username}
+                </span>
               </div>
             );
           })}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -7,24 +7,53 @@ import { useNavigate } from "react-router-dom";
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   postText: Yup.string().required("Post Text is required"),
-  username: Yup.string().required("username is required"),
   category: Yup.string().required("Category is required"),
   image: Yup.mixed().required("Image is required"),
 });
 
 function CreatePostPage() {
   const navigate = useNavigate();
+  const [postText, setPostText] = useState("");
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      try {
+        const parsedToken = JSON.parse(accessToken);
+        const { username } = parsedToken;
+        setUsername(username);
+      } catch (error) {
+        console.error("Error parsing accessToken:", error);
+        // Handle the error gracefully, e.g., by clearing the accessToken or showing an error message.
+      }
+    }
+  }, []);
 
   const handleImageChange = (event, setFieldValue) => {
     const file = event.target.files[0];
     setFieldValue("image", file);
   };
 
+  const handleInput = (event) => {
+    const bullet = "\u2022";
+    const { value, selectionStart } = event.target;
+
+    const lines = value.split("\n");
+    const currentLineIndex =
+      value.substr(0, selectionStart).split("\n").length - 1;
+    const currentLine = lines[currentLineIndex];
+
+    if (!currentLine.startsWith(bullet)) {
+      lines[currentLineIndex] = `${bullet} ${currentLine}`;
+      setPostText(lines.join("\n"));
+    }
+  };
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const formData = new FormData();
     formData.append("title", values.title);
-    formData.append("postText", values.postText);
-    formData.append("username", values.username);
+    formData.append("postText", postText);
+    formData.append("username", username);
     formData.append("category", values.category);
     formData.append("image", values.image);
 
@@ -46,8 +75,6 @@ function CreatePostPage() {
       <Formik
         initialValues={{
           title: "",
-          postText: "",
-          username: "",
           category: "",
           image: null,
         }}
@@ -72,11 +99,20 @@ function CreatePostPage() {
                 whiteSpace: "pre-wrap",
                 overflowWrap: "break-word",
               }}
+              onKeyDown={handleInput}
+              value={postText}
+              onChange={(e) => setPostText(e.target.value)}
             />
             <ErrorMessage name="postText" component="div" />
 
-            <label htmlFor="username">username:</label>
-            <Field type="text" name="username" id="username" />
+            <label htmlFor="username">Username:</label>
+            <Field
+              type="text"
+              name="username"
+              id="username"
+              readOnly
+              value={username}
+            />
             <ErrorMessage name="username" component="div" />
 
             <label htmlFor="category">Category:</label>

@@ -2,114 +2,102 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
 
   const initialValues = {
     username: "",
     password: "",
   };
+  const handleSubmit = async (formData) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        formData
+      );
+      const accessToken = response.data.accessToken; // Get the access token from the response
 
-  const validationSchema = Yup.object({
-    username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
-  });
+      // Save the access token to local storage or session storage
+      localStorage.setItem("accessToken", accessToken);
 
-  const handleSubmit = (values) => {
-    axios
-      .post("http://localhost:3000/auth/login", values)
-      .then((response) => {
-        if (response.data.error) {
-          setError(response.data.error);
-        } else {
-          const accessToken = response.data.accessToken;
-          localStorage.setItem("accessToken", accessToken);
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        console.error("Error logging in:", error);
-        setError("An error occurred. Please try again.");
-      });
+      console.log("User logged in successfully");
+      alert("You're logged in. Redirecting to the homepage.");
+      navigate("/");
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
   };
 
   return (
     <>
-      <div
-        style={{
-          width: "100%",
-          height: "500px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+      <button
+        style={{ height: "50px", marginLeft: "40px" }}
+        onClick={() => navigate("/")}
       >
-        <h3 style={{ marginBottom: "30px" }}>Login Page</h3>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+        <BiArrowBack fontSize={28} />
+      </button>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form
+          style={{
+            height: "85vh",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <Form>
-            <div>
-              <label htmlFor="username">Username:</label>
-              <Field
-                type="text"
-                id="username"
-                name="username"
-                autocomplete="off"
-              />
-              <ErrorMessage name="username" component="div" />
-            </div>
+          <h3 style={{ marginBottom: "30px" }}>Login Page</h3>
 
-            <div>
-              <label htmlFor="password">Password:</label>
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="off"
-              />
-              <ErrorMessage name="password" component="div" />
-            </div>
+          <label htmlFor="username">Username:</label>
+          <Field type="text" name="username" id="username" autoComplete="off" />
+          <ErrorMessage name="username" component="div" className="Error" />
 
-            <button
-              type="submit"
-              style={{
-                background: "#232323",
-                color: "#fff",
-                padding: "10px 20px",
-                marginTop: "20px",
-              }}
-            >
-              Login
-            </button>
-          </Form>
-        </Formik>
+          <label htmlFor="password">Password:</label>
+          <Field type="password" name="password" autoComplete="off" />
+          <ErrorMessage name="password" component="div" className="Error" />
 
-        <span style={{ marginTop: "15px", fontSize: 14 }}>
-          Dont have an account?{" "}
           <button
-            onClick={() => navigate("/registration-page")}
-            style={{ textDecoration: "underline", color: "blue" }}
+            type="submit"
+            style={{
+              marginTop: "20px",
+              padding: "10px 20px",
+              backgroundColor: "#232323",
+              color: "#fff",
+              borderRadius: "8px",
+            }}
           >
-            Register here
+            Login
           </button>
-        </span>
+          <span style={{ marginTop: "15px", fontSize: 14 }}>
+            Don't have an account?{" "}
+            <button
+              onClick={() => navigate("/registration-page")}
+              style={{ textDecoration: "underline", color: "blue" }}
+            >
+              Register here
+            </button>
+          </span>
 
-        <button
-          onClick={() => navigate("/")}
-          style={{ textDecoration: "underline", marginTop: "20px" }}
-        >
-          Go Home
-        </button>
-      </div>
+          <button
+            onClick={() => navigate("/")}
+            style={{ marginTop: "20px", textDecoration: "underline" }}
+          >
+            Go Home
+          </button>
+        </Form>
+      </Formik>
     </>
   );
 }

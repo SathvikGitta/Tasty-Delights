@@ -1,25 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Comments, Posts } = require("../models");
-const { verify } = require("jsonwebtoken");
-
-const validateToken = (req, res, next) => {
-    const accessToken = req.header("accessToken");
-
-    if (!accessToken) {
-        return res.status(401).json({ error: "User not logged in" });
-    }
-
-    try {
-        const validToken = verify(accessToken, "importantSecret");
-        req.user = validToken;
-        if (validToken) {
-            return next();
-        }
-    } catch (err) {
-        return res.status(403).json({ error: "Invalid token" });
-    }
-};
+const { validateToken } = require("../middleware/AuthMiddleWare")
 
 router.get("/:postId", async (req, res) => {
     const postId = req.params.postId;
@@ -34,8 +16,10 @@ router.get("/:postId", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", validateToken, async (req, res) => {
     const comment = req.body;
+    const username = req.user.username;
+    comment.username = username;
     await Comments.create(comment);
     res.json(comment);
 })

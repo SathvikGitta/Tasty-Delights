@@ -43,6 +43,7 @@ function TrendingPost() {
                     title={items.title}
                     description={items.postText}
                     category={items.category}
+                    image={items.image}
                   />
                 </div>
               </>

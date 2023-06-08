@@ -21,7 +21,8 @@ function RegistrationPage() {
   const handleSubmit = async (formData) => {
     try {
       await axios.post("http://localhost:3000/auth", formData);
-      console.log("User registered successfully", formData);
+      console.log("User registered successfully");
+      alert("User Registered");
     } catch (error) {
       console.error("Error registering a new user:", error);
     }
@@ -87,7 +88,7 @@ function RegistrationPage() {
           <span style={{ marginTop: "10px" }}>
             have an account please{" "}
             <button
-              onClick={() => navigate("/login-page")}
+              // onClick={() => navigate("/login-page")}
               style={{ textDecoration: "underline", color: "blue" }}
             >
               login

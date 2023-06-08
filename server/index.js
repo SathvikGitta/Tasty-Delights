@@ -4,7 +4,8 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 const { Posts } = require("./models/index");
-const { validateToken } = require("./middleware/AuthMiddleWare"); // 
+const { validateToken } = require("./middleware/AuthMiddleWare");
+const bodyParser = require('body-parser');
 
 app.use("/Images", express.static("./Images"));
 app.use(express.json());

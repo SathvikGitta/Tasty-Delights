@@ -5,7 +5,7 @@ function Imageheader() {
       <main className="imageSection">
         <section className="Imagetext">
           <h2 className="title-headline">Savor the Art of Cooking</h2>
-          <span className="titlechef-tagline">
+          <span className="titlechef-tagline" style={{ color: "black" }}>
             Find Inspiration and Delicious Recipes on TastyDelights
           </span>
           <Link to="/recipes">
@@ -14,9 +14,7 @@ function Imageheader() {
         </section>
 
         {/* Image Grid Section */}
-        <section
-          className="image-grid"
-        ></section>
+        <section className="image-grid"></section>
       </main>
     </>
   );

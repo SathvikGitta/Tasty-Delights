@@ -12,10 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     category: {
       type: DataTypes.STRING,
       allowNull: false
@@ -23,11 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Posts.associate = (models) => {
+    Posts.belongsTo(models.Users, { foreignKey: 'userId' });
     Posts.hasMany(models.Comments, {
-      onDelete: "cascade"
-    });
-    Posts.belongsTo(models.Users, {
-      foreignKey: 'userId',
       onDelete: "cascade"
     });
   };

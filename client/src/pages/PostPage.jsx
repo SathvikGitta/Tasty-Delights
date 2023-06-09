@@ -41,7 +41,10 @@ function PostPage() {
         }
       )
       .then((response) => {
-        const commentToAdd = { commentBody: newComment,username : response.data.username};
+        const commentToAdd = {
+          commentBody: newComment,
+          username: response.data.username,
+        };
         setNewComment(...comments, commentToAdd);
         setNewComment("");
       });
@@ -72,7 +75,7 @@ function PostPage() {
             {postData.title}
           </h2>
           <p style={{ marginTop: "5px", fontSize: 18, fontWeight: 600 }}>
-            by {comments.username}
+            by sathvik
           </p>
           <img
             src={`http://localhost:3000/Images/${postData.image}`}
@@ -167,7 +170,7 @@ function PostPage() {
               >
                 <span>{comment.commentBody}</span>
                 <span style={{ fontSize: 12, fontWeight: 600 }}>
-                  {comments.username}
+                  {comment.username}
                 </span>
               </div>
             );

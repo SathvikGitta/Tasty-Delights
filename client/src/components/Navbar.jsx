@@ -22,7 +22,7 @@ function Navbar() {
                 className="Link"
                 style={{ display: "flex", alignItems: "center", gap: "2px" }}
               >
-                Explore all
+                Explore
               </Link>
             </button>
             <button>

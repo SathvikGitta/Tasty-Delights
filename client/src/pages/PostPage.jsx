@@ -36,7 +36,7 @@ function PostPage() {
         },
         {
           headers: {
-            accessToken: localStorage.getItem("accessToken"),
+            authToken: localStorage.getItem("authToken"),
           },
         }
       )
@@ -74,9 +74,7 @@ function PostPage() {
           <h2 style={{ fontSize: 38, textTransform: "capitalize" }}>
             {postData.title}
           </h2>
-          <p style={{ marginTop: "5px", fontSize: 18, fontWeight: 600 }}>
-            by sathvik
-          </p>
+
           <img
             src={`http://localhost:3000/Images/${postData.image}`}
             alt={postData.image}
@@ -102,8 +100,8 @@ function PostPage() {
               style={{
                 fontSize: 16,
                 marginTop: "10px",
-                width: "auto",
-                height: "380px",
+                width: "450px",
+                height: "auto",
                 lineHeight: "1.5",
                 textAlign: "justify",
                 maxHeight: "500px",

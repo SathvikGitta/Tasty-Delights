@@ -7,7 +7,9 @@ function RecipeCard({ userName, title, description, category, image }) {
             <div className="recipeCard-Text">
               <h4 className="recipeCard-userName">{userName} </h4>
               <h3 className="recipeCard-title">{title}</h3>
-              <p className="recipeCard-description">{description}</p>
+              <p className="recipeCard-description" style={{ width: "300px" }}>
+                {description}
+              </p>
               <span className="recipeCard-category">{category}</span>
             </div>
 

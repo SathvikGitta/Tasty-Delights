@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -15,8 +15,8 @@ function CreatePostPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
       navigate("/login-page"); // Redirect to login page if user is not logged in
     }
   }, [navigate]);
@@ -35,7 +35,7 @@ function CreatePostPage() {
 
     try {
       await axios.post("http://localhost:3000/recipes", formData);
-      console.log("Post created successfully");
+      alert("Post created successfully");
       resetForm();
       navigate("/recipes");
     } catch (error) {

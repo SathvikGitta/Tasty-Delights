@@ -9,7 +9,15 @@ function TrendingCard({ title, description, userName, category, image }) {
         />
         <h4 className="trendingcard-userName">{userName}</h4>
         <h2 className="trendingcard-title">{title}</h2>
-        <p className="trendingcard-description">{description}</p>
+        <p
+          className="trendingcard-description"
+          style={{
+            width: "350px",
+            height: "45px",
+          }}
+        >
+          {description}
+        </p>
         <span className="trendingcard-category">{category}</span>
       </div>
     </>

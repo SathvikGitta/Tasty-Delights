@@ -35,10 +35,10 @@ function TrendingPost() {
               <>
                 <div
                   onClick={() => handleRecipeClick(items.id, items.category)}
-                  key={key}
                   style={{ cursor: "pointer" }}
                 >
                   <TrendingCard
+                    key={key}
                     userName={items.userName}
                     title={items.title}
                     description={items.postText}

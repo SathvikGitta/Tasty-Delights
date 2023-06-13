@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -72,26 +71,30 @@ function RegistrationPage() {
             <button
               type="submit"
               style={{
+                marginTop: "10px",
                 width: "150px",
-                height: "40px",
                 backgroundColor: "#232323",
                 color: "#fff",
-                borderRadius: "4px",
+                padding: "10px",
+                borderRadius: "20px",
               }}
             >
               register user
             </button>
           </div>
-          <button
-            onClick={() => navigate("/login-page")}
-            style={{
-              textDecoration: "underline",
-              fontSize: 16,
-              color: "blue",
-            }}
-          >
-            login
-          </button>
+          <p style={{ fontSize: "14px" }}>
+            Have an account
+            <button
+              onClick={() => navigate("/login-page")}
+              style={{
+                textDecoration: "underline",
+                fontSize: 14,
+                color: "blue",
+              }}
+            >
+              login here
+            </button>
+          </p>
         </Form>
       </Formik>
     </>

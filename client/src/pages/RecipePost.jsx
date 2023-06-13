@@ -17,6 +17,13 @@ function RecipePost() {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      navigate("/login-page"); // Redirect to login page if user is not logged in
+    }
+  }, [navigate]);
+
   const handleRecipeClick = (recipeId, category) => {
     setSelectedCategory(category);
     navigate(`/post/${recipeId}`);

@@ -109,7 +109,7 @@ button {
 /* Trending Posts */
 .trendingPostContainer {
     width: 100%;
-    height: 550px;
+    height: auto;
     padding-top: 40px;
     padding-left: 30px;
 }
@@ -134,10 +134,8 @@ button {
 /* End of Trending Posts */
 /* Trending Card */
 .trendingCard-container {
-    width: 28 0px;
-    height: 350px;
-    background-color: #fff;
-    /* box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); */
+    width: 280px;
+    height: auto;
     padding: 10px;
     border-radius: 4px;
 }
@@ -152,19 +150,7 @@ button {
     font-weight: 700;
 }
 
-.trendingcard-description {
-    margin-top: 6px;
-    width: 100%;
-    height: 170px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7;
-    line-height: 1.5rem;
-    text-align: justify;
-    font-size: 16px;
-}
+
 
 .trendingcard-category {
     width: fit-content;

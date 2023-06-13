@@ -8,6 +8,7 @@ function PostPage() {
   const [postData, setPostData] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const authToken = localStorage.getItem("authToken");
 
   const { id } = useParams();
 
@@ -36,7 +37,7 @@ function PostPage() {
         },
         {
           headers: {
-            authToken: localStorage.getItem("authToken"),
+            Authorization: `Bearer ${authToken}`,
           },
         }
       )
@@ -45,7 +46,7 @@ function PostPage() {
           commentBody: newComment,
           username: response.data.username,
         };
-        setNewComment(...comments, commentToAdd);
+        setComments([...comments, commentToAdd]);
         setNewComment("");
       });
   };
@@ -166,8 +167,8 @@ function PostPage() {
                   marginTop: 5,
                 }}
               >
-                <span>{comment.commentBody}</span>
-                <span style={{ fontSize: 12, fontWeight: 600 }}>
+                <span style={{ color: "black" }}>{comment.commentBody}</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "black" }}>
                   {comment.username}
                 </span>
               </div>

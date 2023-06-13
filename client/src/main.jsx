@@ -10,6 +10,7 @@ import RecipePost from "./pages/RecipePost.jsx";
 import PostPage from "./pages/PostPage.jsx";
 import RegistrationPage from "./pages/RegistrationPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/post/:id",
     element: <PostPage />, //Individual Page
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(

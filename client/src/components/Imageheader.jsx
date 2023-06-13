@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import TrendingPost from "./TrendingPost";
+
 function Imageheader() {
   return (
     <>
@@ -16,6 +18,7 @@ function Imageheader() {
         {/* Image Grid Section */}
         <section className="image-grid"></section>
       </main>
+      <TrendingPost />
     </>
   );
 }

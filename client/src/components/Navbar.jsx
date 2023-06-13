@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Helpers/AuthContext";
 import { useState, useEffect } from "react";
+import { GoPerson } from "react-icons/go";
 import axios from "axios";
 
 function Navbar() {
@@ -39,7 +40,7 @@ function Navbar() {
     } else {
       setAuthState({ ...authState, status: false });
     }
-  }, [authToken]);
+  }, [authState, authToken]);
 
   // Logout Handle
   const handleLogOut = () => {
@@ -63,7 +64,7 @@ function Navbar() {
           </h1>
         </section>
         <section className="navbar-list">
-          <ul>
+          <ul style={{ alignItems: "center" }}>
             <button>
               <Link
                 to="/recipes"
@@ -95,18 +96,28 @@ function Navbar() {
                 </AuthContext.Provider>
               </>
             ) : (
-              <button
-                style={{
-                  backgroundColor: "#232323",
-                  color: "#fff",
-                  width: "60px",
-                  padding: "7px",
-                  borderRadius: "4px",
-                }}
-                onClick={handleLogOut}
-              >
-                Logout
-              </button>
+              <>
+                <div>
+                  <GoPerson
+                    size={22}
+                    onClick={() => navigate("/profile")}
+                    style={{ cursor: "pointer" }}
+                    title="profile"
+                  />
+                </div>
+                <button
+                  style={{
+                    backgroundColor: "#232323",
+                    color: "#fff",
+                    width: "60px",
+                    padding: "7px",
+                    borderRadius: "4px",
+                  }}
+                  onClick={handleLogOut}
+                >
+                  Logout
+                </button>
+              </>
             )}
           </ul>
         </section>

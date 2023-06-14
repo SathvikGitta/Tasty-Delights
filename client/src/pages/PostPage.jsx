@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { IoMdSend } from "react-icons/io";
+import { IoMdSend, IoIosArrowRoundBack } from "react-icons/io";
+
 import Navbar from "../components/Navbar";
 
 function PostPage() {
@@ -11,6 +12,7 @@ function PostPage() {
   const authToken = localStorage.getItem("authToken");
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -72,10 +74,16 @@ function PostPage() {
             alignItems: "center",
           }}
         >
-          <h2 style={{ fontSize: 38, textTransform: "capitalize" }}>
-            {postData.title}
-          </h2>
-
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          >
+            <button onClick={() => navigate("/recipes")}>
+              <IoIosArrowRoundBack fontSize={55} />
+            </button>
+            <h2 style={{ fontSize: 38, textTransform: "capitalize" }}>
+              {postData.title}
+            </h2>
+          </div>
           <img
             src={`http://localhost:3000/Images/${postData.image}`}
             alt={postData.image}
@@ -86,6 +94,8 @@ function PostPage() {
               objectFit: "cover",
             }}
           />
+          <p style={{ marginTop: "10px" }}>Recipe by : {postData.username}</p>
+
           <div
             style={{
               marginTop: "10px",
@@ -101,7 +111,7 @@ function PostPage() {
               style={{
                 fontSize: 16,
                 marginTop: "10px",
-                width: "450px",
+                width: "100%",
                 height: "auto",
                 lineHeight: "1.5",
                 textAlign: "justify",

@@ -39,7 +39,7 @@ function TrendingPost() {
                 >
                   <TrendingCard
                     key={key}
-                    userName={items.userName}
+                    username={items.username}
                     title={items.title}
                     description={items.postText}
                     category={items.category}

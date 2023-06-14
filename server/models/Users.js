@@ -12,9 +12,10 @@ module.exports = (sequelize, DataTypes) => {
 
     Users.associate = (models) => {
         Users.hasMany(models.Posts, {
+            foreignKey: 'userId', // Add this line to specify the foreign key
             onDelete: "cascade",
         });
-    }
+    };
 
     return Users;
 };

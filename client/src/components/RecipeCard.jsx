@@ -1,11 +1,13 @@
-function RecipeCard({ userName, title, description, category, image }) {
+function RecipeCard({ username, title, description, category, image }) {
   return (
     <>
       <div className="recipeCard-container">
         <div className="recipeCard-containerData">
           <div className="recipeCard-dataCard">
             <div className="recipeCard-Text">
-              <h4 className="recipeCard-userName">{userName} </h4>
+              <p style={{ marginTop: "5px", fontWeight: 500 }}>
+                {username.charAt(0).toUpperCase() + username. slice(1)}
+              </p>
               <h3 className="recipeCard-title">{title}</h3>
               <p className="recipeCard-description" style={{ width: "300px" }}>
                 {description}
@@ -24,7 +26,6 @@ function RecipeCard({ userName, title, description, category, image }) {
             </div>
           </div>
         </div>
-        <div className="recipeCard-categories"></div>
       </div>
     </>
   );

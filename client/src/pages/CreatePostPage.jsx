@@ -2,11 +2,18 @@
 import CreatePostCard from "./CreatePostCard";
 
 function CreatePostPage() {
-  const username = localStorage.getItem("username"); // Get the username from localStorage
-
   return (
-    <div>
-      <CreatePostCard username={username} /> {/* Pass the username prop */}
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "10px",
+      }}
+    >
+      <CreatePostCard />
     </div>
   );
 }

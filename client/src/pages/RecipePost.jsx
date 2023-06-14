@@ -57,7 +57,7 @@ function RecipePost() {
                 style={{ cursor: "pointer" }}
               >
                 <RecipeCard
-                  // username={items.username}
+                  username={items.username}
                   title={items.title}
                   description={items.postText}
                   category={items.category}

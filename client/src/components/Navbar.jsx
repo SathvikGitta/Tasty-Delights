@@ -40,7 +40,7 @@ function Navbar() {
     } else {
       setAuthState({ ...authState, status: false });
     }
-  }, [authState, authToken]);
+  }, []);
 
   // Logout Handle
   const handleLogOut = () => {
@@ -58,7 +58,7 @@ function Navbar() {
           <h1 className="logo-text">
             <Link to="/" className="logo-text" style={{ color: "#232323" }}>
               {authState.username
-                ? `Welcome, ${authState.username}`
+                ? `Welcome, ${authState.username}`.toLocaleUpperCase()
                 : "Tasty Delights"}
             </Link>
           </h1>

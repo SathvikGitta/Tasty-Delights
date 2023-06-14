@@ -4,8 +4,8 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 const { Posts } = require("./models/index");
-const { validateToken } = require("./middleware/AuthMiddleWare");
 const bodyParser = require('body-parser');
+const { verify } = require("jsonwebtoken");
 
 app.use("/Images", express.static("./Images"));
 app.use(express.json());
@@ -45,15 +45,36 @@ const upload = multer({
     },
 }).single("image");
 
-// GET & POST METHODS
-app.post("/recipes", upload, async (req, res) => {
+// Middleware to validate the token and extract user information
+const validateToken = (req, res, next) => {
+    const authToken = req.header("Authorization");
+
+    if (!authToken) {
+        return res.status(401).json({ error: "User not logged in" });
+    }
+
+    try {
+        const token = authToken.split(" ")[1]; // Extracting the token from "Bearer <token>"
+        const validToken = verify(token, "importantSecret");
+        req.user = validToken;
+        if (validToken) {
+            return next();
+        }
+    } catch (err) {
+        return res.status(403).json({ error: "Invalid token" });
+    }
+};
+
+// POST method - Create a recipe
+app.post("/recipes", validateToken, upload, async (req, res) => {
     try {
         if (req.file == null) {
             return res.status(400).json({ error: "No image file provided." });
         }
 
-        const { title, postText, username, category } = req.body;
+        const { title, postText, category } = req.body;
         const image = req.file.filename;
+        const { username } = req.user;
 
         const post = {
             image,
@@ -70,7 +91,13 @@ app.post("/recipes", upload, async (req, res) => {
     }
 });
 
-// GET method with validateToken middleware
+// GET method - Get user information
+app.get("/auth/userinfo", validateToken, (req, res) => {
+    const { username } = req.user;
+    res.json({ username });
+});
+
+// GET method - Get all recipes
 app.get("/recipes", async (req, res) => {
     try {
         const listOfPosts = await Posts.findAll({
@@ -82,6 +109,7 @@ app.get("/recipes", async (req, res) => {
     }
 });
 
+// GET method - Get a specific recipe by ID
 app.get("/recipes/:id", async (req, res) => {
     const { id } = req.params;
     try {
@@ -95,7 +123,8 @@ app.get("/recipes/:id", async (req, res) => {
     }
 });
 
-app.put("/recipes/:id", upload, async (req, res) => {
+// PUT method - Update a specific recipe by ID
+app.put("/recipes/:id", validateToken, upload, async (req, res) => {
     const { id } = req.params;
     try {
         const post = await Posts.findByPk(id);
@@ -103,8 +132,9 @@ app.put("/recipes/:id", upload, async (req, res) => {
             return res.status(404).json({ error: "Post not found." });
         }
 
-        const { title, postText, username, category } = req.body;
+        const { title, postText, category } = req.body;
         let image = post.image;
+        const { username } = req.user;
 
         if (req.file) {
             image = req.file.filename;
@@ -125,7 +155,8 @@ app.put("/recipes/:id", upload, async (req, res) => {
     }
 });
 
-app.delete("/recipes/:id", async (req, res) => {
+// DELETE method - Delete a specific recipe by ID
+app.delete("/recipes/:id", validateToken, async (req, res) => {
     const { id } = req.params;
     try {
         const post = await Posts.findByPk(id);
@@ -139,6 +170,54 @@ app.delete("/recipes/:id", async (req, res) => {
         res.status(500).json({ error: "Failed to delete the post." });
     }
 });
+
+// GET method - Get user profile
+app.get("/profile/:username", async (req, res) => {
+    const { username } = req.params;
+    try {
+        const userPosts = await Posts.findAll({
+            where: { username },
+            order: [["createdAt", "DESC"]],
+        });
+        res.json(userPosts);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch user profile." });
+    }
+});
+
+// PUT method - Update user profile
+app.put("/profile/:username", validateToken, async (req, res) => {
+    const { username } = req.params;
+    const { bio } = req.body;
+    try {
+        const user = await User.findOne({ where: { username } });
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        await user.update({ bio });
+        res.json({ message: "Profile updated successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update user profile." });
+    }
+});
+
+// DELETE method - Delete user profile
+app.delete("/profile/:username", validateToken, async (req, res) => {
+    const { username } = req.params;
+    try {
+        const user = await User.findOne({ where: { username } });
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        await user.destroy();
+        res.json({ message: "Profile deleted successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete user profile." });
+    }
+});
+
 
 // Other routes and configurations
 // Routers

@@ -1,85 +1,153 @@
-/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../Helpers/AuthContext";
 
-function EditPostPage({ postId }) {
-  const [title, setTitle] = useState("");
-  const [postText, setPostText] = useState("");
-  const [category, setCategory] = useState("");
-  const [image, setImage] = useState(null);
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  postText: Yup.string().required("Post Text is required"),
+  category: Yup.string().required("Category is required"),
+  image: Yup.mixed().required("Image is required"),
+});
+
+function EditPostPage() {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const { authState } = useContext(AuthContext);
+  const [post, setPost] = useState(null);
 
   useEffect(() => {
-    // Fetch the post data from the server using the postId
-    axios
-      .get(`http://localhost:3000/recipes/${postId}`)
-      .then((response) => {
-        const postData = response.data;
-        setTitle(postData.title);
-        setPostText(postData.postText);
-        setCategory(postData.category);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [postId]);
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/recipes/${id}`);
+        setPost(response.data);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
 
-  const handleUpdatePost = () => {
+    fetchPost();
+  }, [id]);
+
+  const handleImageChange = (event, setFieldValue) => {
+    const file = event.target.files[0];
+    setFieldValue("image", file);
+  };
+
+  const handleSubmit = async (values, { setSubmitting }) => {
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("postText", postText);
-    formData.append("category", category);
-    if (image) {
-      formData.append("image", image);
+    formData.append("title", values.title);
+    formData.append("postText", values.postText);
+    formData.append("category", values.category);
+    formData.append("image", values.image);
+
+    try {
+      const authToken = localStorage.getItem("authToken");
+      const response = await axios.put(
+        `http://localhost:3000/recipes/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      console.log("Post updated successfully:", response.data);
+      alert("Post updated successfully");
+      navigate("/recipes");
+    } catch (error) {
+      console.error("Error updating post:", error);
     }
 
-    axios
-      .put(`http://localhost:3000/recipes/${postId}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(() => {
-        alert("Post updated successfully");
-        navigate("/recipes");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setSubmitting(false);
   };
+
+  if (!post) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <h2>Edit Post</h2>
-      <form>
-        <label>Title:</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+      <h1>Edit Post</h1>
+      <Formik
+        initialValues={{
+          title: post.title,
+          postText: post.postText,
+          category: post.category,
+          image: null,
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ setFieldValue }) => (
+          <Form>
+            <label htmlFor="title">Title:</label>
+            <Field type="text" name="title" id="title" />
+            <ErrorMessage name="title" component="span" />
 
-        <label>Post Text:</label>
-        <textarea
-          value={postText}
-          onChange={(e) => setPostText(e.target.value)}
-        ></textarea>
+            <label htmlFor="postText">Post Text:</label>
+            <Field
+              as="textarea"
+              name="postText"
+              id="postText"
+              rows={10}
+              cols={50}
+            />
+            <ErrorMessage name="postText" component="span" />
 
-        <label>Category:</label>
-        <input
-          type="text"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        />
+            <label htmlFor="category">Category:</label>
+            <Field as="select" name="category" id="category">
+              <option value="">Select a category</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="snacks">Snacks</option>
+              <option value="Dinner">Dinner</option>
+            </Field>
+            <ErrorMessage name="category" component="span" />
 
-        <label>Image:</label>
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <label htmlFor="image">Image:</label>
+            <input
+              type="file"
+              id="image"
+              accept="image/png,image/jpeg,image/jpg,image/svg"
+              onChange={(event) => handleImageChange(event, setFieldValue)}
+              name="image"
+            />
+            <ErrorMessage name="image" component="span" />
 
-        <button type="button" onClick={handleUpdatePost}>
-          Update Post
-        </button>
-      </form>
+            <div>
+              <label htmlFor="username">Username:</label>
+              <Field
+                type="text"
+                id="username"
+                name="username"
+                value={authState.username}
+                readOnly
+              />
+              <ErrorMessage name="username" component="span" />
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                style={{
+                  width: "120px",
+                  marginTop: "20px",
+                  height: "40px",
+                  backgroundColor: "#232323",
+                  color: "#fff",
+                  borderRadius: "4px",
+                }}
+              >
+                Update Post
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }

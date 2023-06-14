@@ -1,4 +1,4 @@
-function TrendingCard({ title, description, userName, category, image }) {
+function TrendingCard({ title, description, username, category, image }) {
   return (
     <>
       <div className="trendingCard-container">
@@ -7,7 +7,6 @@ function TrendingCard({ title, description, userName, category, image }) {
           alt={image}
           className="Trending-image"
         />
-        <h4 className="trendingcard-userName">{userName}</h4>
         <h2 className="trendingcard-title">{title}</h2>
         <p
           className="trendingcard-description"
@@ -25,9 +24,12 @@ function TrendingCard({ title, description, userName, category, image }) {
         >
           {description}
         </p>
-        <span className="trendingcard-category" style={{ color: "black" }}>
-          {category}
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <span className="trendingcard-username">{username}</span>
+          <span className="trendingcard-category" style={{ color: "black" }}>
+            {category}
+          </span>
+        </div>
       </div>
     </>
   );

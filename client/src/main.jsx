@@ -11,6 +11,8 @@ import PostPage from "./pages/PostPage.jsx";
 import RegistrationPage from "./pages/RegistrationPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import EditPostPage from "./pages/EditPostPage.jsx";
+import { AuthProvider } from "./Helpers/AuthContext"; // Import AuthProvider
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/create-a-post",
-    element: <CreatePostPage />, //<CreatePostPage/>
+    element: <CreatePostPage />,
   },
   {
     path: "/registration-page",
@@ -32,19 +34,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/login-page",
-    element: <LoginPage />, //<SignUpPage/>
+    element: <LoginPage />,
   },
   {
     path: "/post/:id",
-    element: <PostPage />, //Individual Page
+    element: <PostPage />,
   },
   {
     path: "/profile",
     element: <ProfilePage />,
   },
+  {
+    path: "/edit-post/:id",
+    element: <EditPostPage />,
+  },
 ]);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      {" "}
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
